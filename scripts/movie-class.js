@@ -1,7 +1,7 @@
 class Movie{
-    constructor(title, ratings, runTime, genre, description, poster, saved = false) {
+    constructor(title,  runTime, genre, description, poster, saved = false) {
         this.title = title
-        this.rating = ratings
+        // this.rating = ratings
         this.runTime = runTime
         this.genre = genre
         this.description = description
@@ -17,7 +17,6 @@ class Movie{
                         <p class="rating flex">
                             <img    src="./assets/star-icon.png" 
                                     alt="star icon">
-                                    ${this.rating}
                         </p>
                     </div>
                     <div class="movie-data flex">
