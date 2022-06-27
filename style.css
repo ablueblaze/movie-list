@@ -4,7 +4,6 @@
     --grey-scale-300: #4B4B4B;
     --grey-scale-100: #A5A5A5;
     --grey-scale-000: #fff;
-
 }
 
 * {
@@ -93,11 +92,19 @@ Search bar
     /* Due to positioning Had to duplicate the padding of container */
     width: 90%;
     overflow: hidden;
-    bottom: -1.8em;
+    /* I feel like this centering could be achieved more smoothly */
+    bottom: -1.5em;
     left: 50%;
     -webkit-transform: translateX(-50%);
     transform: translateX(-50%);
     border-radius: 10px;
+    opacity: 1;
+    transition: opacity 600ms ease-in-out;
+}
+
+.search-bar.hidden {
+    opacity: 0;
+    pointer-events: none;
 }
 
 .search-bar label {
@@ -171,8 +178,22 @@ Movie card
     
 }
 
+.sub-title {
+    width: 100%;
+    justify-content: space-between;
+}
+
 .rating {
     padding-left: 1em;
+    align-items: center;
+    /* justify-content: end; */
+}
+
+.rating-num {
+    padding-left: .2em;
+    /* todo: figure out how to get this to sit inline with the star */
+    padding-top: .1em;
+    font-size: .9rem;
     align-items: center;
 }
 
@@ -209,6 +230,11 @@ Movie card
     height: auto;
 }
 
-
+.description {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;  
+    overflow: hidden;
+}
 
 

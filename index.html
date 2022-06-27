@@ -19,12 +19,13 @@
             <header class="flex">
                 <div class="content-container">
                     <div class="title-bar flex">
-                        <h1 class="title">Find your film</h1>
-                        <a href="#">My Watchlist</a>
+                        <h1 id="title" class="title">Find your film</h1>
+                        <a id="navigation-btn" data-page="find" href="#">My Watchlist</a>
                     </div>
-                    <div class="search-bar flex">
+                    <div id="search-bar" class="search-bar flex">
                         <label for="search-input">
-                            <img    src="./assets/search-icon.png" 
+                            <img    class="flex"
+                                    src="./assets/search-icon.png" 
                                     alt="magnifying glass icon">
                         </label>
                         <input  type="text" name="search-input" id="search-input">
