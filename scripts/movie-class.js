@@ -6,6 +6,7 @@ class Movie {
         genre,
         description,
         poster,
+        id,
         saved = false
     ) {
         this.title = title;
@@ -14,6 +15,7 @@ class Movie {
         this.genre = genre;
         this.description = description;
         this.poster = poster;
+        this.id = id,
         this.saved = saved;
     }
     getCardHtml() {
@@ -39,6 +41,7 @@ class Movie {
             </div>
         `;
     }
+    // todo get this functionality up and going
     getWatchListHtml() {
         let symbol = './assets/plus-icon.png';
         let word = 'Add';
@@ -47,7 +50,7 @@ class Movie {
             word = 'Remove';
         }
         return `
-            <button class="watch-list-btn flex" data-watch-list-btn="${this.title} ${this.runTime}">
+            <button class="watch-list-btn flex" data-watch-list-btn="${this.id}">
                 <img src=${symbol} alt="plus symbol"> 
                 ${word} to watchlist
             </button> 

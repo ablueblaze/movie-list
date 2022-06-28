@@ -1,120 +1,88 @@
-// todo: rename resources to something more applicable
+// todo list:
+/*
+-   Rethink all the file names
+-   Incorporate exception handling in the api-tools
+-   Fade in/out default content 
+-   Fade in/out movie cards on switching pages
+-   Enable the toggling of the watchList buttons
+-   Set up the search bar as a small form
+-   Re-organize the css
+-   On search, clear search field
+-   Implement no results
+-   Clean up the flipPage function
+*/
 
-import Movie from './scripts/movie-class.js';
+import movieSearch from './scripts/api-tools.js';
+import { pageValues } from './scripts/misc-tools.js';
 import {
-    searchApiStr,
-    movieDataApiStr,
-    getFindPageValues,
-    getWatchListValues,
+    fadeTransition,
     getNoResultsHtml,
+    displaySearchResults,
     getSearchDefaultHtml,
-} from './scripts/resources.js';
+    getWatchListDefaultHtml,
+} from './scripts/dom-tools.js';
 
-let watchList = []
-
-const validateData = (movieData) => {
-    let validData = [];
-    let pass = false;
-    for (let i of movieData) {
-        // todo: do I need the key here?
-        for (let [key, value] of Object.entries(i)) {
-            if (value === 'N/A') {
-                pass = true;
-                continue;
-            }
-        }
-        if (pass) continue;
-        validData.push(i);
-    }
-    return validData;
-};
-
-const getSearchResults = async (title) => {
-    const resp = await fetch(searchApiStr(title));
-    const searchData = await resp.json();
-    // todo: incorporate exception handling around here
-    if (searchData.Error) {
-        return false;
-    }
-    const validSearch = validateData(searchData.Search);
-    return validSearch;
-};
-
-const getMovieData = async (title, year) => {
-    const resp = await fetch(movieDataApiStr(title, year));
-    const movieData = await resp.json();
-    return movieData;
-};
-
-const makeMovieObject = (movieData) => {
-    return new Movie(
-        movieData.Title,
-        movieData.Ratings[0].Value,
-        movieData.Runtime,
-        movieData.Genre,
-        movieData.Plot,
-        movieData.Poster
-    );
-};
-
-const getMovieObjects = async (searchData) => {
-    let movieObjects = [];
-    for (let i = 0; i < searchData.length; i++) {
-        const movieData = await getMovieData(
-            searchData[i].Title,
-            searchData[i].Year
-        );
-        const newMovie = makeMovieObject(movieData);
-        movieObjects.push(newMovie);
-    }
-    return movieObjects;
-};
-
-const searchWrapper = async (placement, title) => {
-    const searchData = await getSearchResults(title);
-    placement.innerHTML = '';
-    if (searchData) {
-        const movieObjects = await getMovieObjects(searchData);
-        for (let i of movieObjects) {
-            placement.insertAdjacentHTML('beforeend', i.getCardHtml());
-        }
-        return;
-    }
-    placement.innerHTML = getNoResultsHtml()
-};
+let watchList = [];
+let activeSearchResults = [];
 
 const mainContent = document.getElementById('main-content');
-const navBtn = document.getElementById('navigation-btn')
+const navBtn = document.getElementById('navigation-btn');
+const searchBtn = document.getElementById('search-btn');
 
-// searchWrapper(mainContent, 'rango');
-
-//! working area //
-
+// todo transition cards
+// todo Clean this up!!!
 const flipPage = (pageName) => {
-    const title = document.getElementById('title')
-    const searchBarEl = document.getElementById('search-bar')
+    const findValues = pageValues('find');
+    const watchValues = pageValues('watch');
+    const title = document.getElementById('title');
+    const searchBarEl = document.getElementById('search-bar');
 
-    const find = getFindPageValues()
-    const watch = getWatchListValues()
+    title.style.transition = 'opacity 600ms';
+    navBtn.style.transition = 'opacity 600ms';
 
-    mainContent.innerHTML = ''
+    mainContent.innerHTML = '';
 
     if (pageName !== 'find') {
-        title.textContent = find.title
-        navBtn.textContent = find.navBtn
-        navBtn.dataset.page = 'find'
-        searchBarEl.classList.remove('hidden')
-        mainContent.innerHTML = getSearchDefaultHtml()
+        fadeTransition(title, findValues.title);
+        fadeTransition(navBtn, findValues.navBtn);
+        navBtn.dataset.page = 'find';
+        setTimeout(() => {
+            searchBarEl.classList.remove('hidden');
+        }, 600);
+        mainContent.innerHTML = getSearchDefaultHtml();
         return;
     }
-    title.textContent = watch.title
-    navBtn.textContent = watch.navBtn
-    navBtn.dataset.page = 'watch'
-    searchBarEl.classList.add('hidden')
-    mainContent.innerHTML = watchList.join('')
-}
+    fadeTransition(title, watchValues.title);
+    fadeTransition(navBtn, watchValues.navBtn);
+    navBtn.dataset.page = 'watch';
+    searchBarEl.classList.add('hidden');
+    if (watchList.length === 0) {
+        // todo set transition on default html
+        mainContent.innerHTML = getWatchListDefaultHtml();
+        return;
+    }
+    mainContent.innerHTML = watchList.join('');
+};
+
+// event listeners:
 
 navBtn.addEventListener('click', (e) => {
-    // todo Think of a better way to differentiat these two pages
-    flipPage(e.target.dataset.page)
-})
+    flipPage(e.target.dataset.page);
+});
+
+searchBtn.addEventListener('click', async () => {
+    const searchValue = document.getElementById('search-input').value;
+    activeSearchResults = await movieSearch.byTitle(searchValue);
+    displaySearchResults(mainContent, activeSearchResults);
+});
+
+mainContent.addEventListener('click', (e) => {
+    const target = e.target;
+    if (target.dataset.watchListBtn) {
+        watchList.push(
+            activeSearchResults
+                .find(({ id }) => id === target.dataset.watchListBtn)
+                .getCardHtml()
+        );
+    }
+});

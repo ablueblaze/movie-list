@@ -74,7 +74,6 @@ header {
     transition: all 100ms ease-in-out; 
 }
 
-.title-bar a:focus,
 .title-bar a:hover {
     text-decoration: underline;
     font-size: 1.025em;
@@ -212,7 +211,6 @@ Movie card
     transition: all 150ms ease-in-out;
 }
 
-.watch-list-btn:focus,
 .watch-list-btn:hover {
 
     background-color: var(--grey-scale-100);
