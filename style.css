@@ -1,40 +1,40 @@
 :root {
-    --grey-scale-500: #121212;
-    --grey-scale-400: #2E2E2F;
-    --grey-scale-300: #4B4B4B;
-    --grey-scale-100: #A5A5A5;
-    --grey-scale-000: #fff;
+  --grey-scale-500: #121212;
+  --grey-scale-400: #2e2e2f;
+  --grey-scale-300: #4b4b4b;
+  --grey-scale-100: #a5a5a5;
+  --grey-scale-000: #fff;
 }
 
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    /* test border */
-    /* border: 1px solid red; */
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  /* test border */
+  /* border: 1px solid red; */
 }
 
 body {
-    font-family: 'Inter', sans-serif;
-    background-color: var(--grey-scale-400);
-    color: var(--grey-scale-000);
+  font-family: 'Inter', sans-serif;
+  background-color: var(--grey-scale-400);
+  color: var(--grey-scale-000);
 }
 
 .main-container {
-    margin: 2em auto;
-    max-width: 600px;
-    min-height: 50em;
-    background-color: var(--grey-scale-500);
+  margin: 2em auto;
+  max-width: 600px;
+  min-height: 50em;
+  background-color: var(--grey-scale-500);
 }
 
 .content-container {
-    width: 90%;
-    margin: 2rem auto;
-    /* padding: 0 2rem; */
+  width: 90%;
+  margin: 2rem auto;
+  /* padding: 0 2rem; */
 }
 
 .flex {
-    display: flex;
+  display: flex;
 }
 
 /*
@@ -44,8 +44,8 @@ Typography
 */
 
 .title {
-    font-size: 2.5rem;
-    font-weight: 800;
+  font-size: 2.5rem;
+  font-weight: 800;
 }
 
 /*
@@ -55,30 +55,29 @@ Header
 */
 
 header {
-    background-image: url(./assets/header-background.png);
-    background-size: 100% 100%;
-    min-height: 13em;
+  background-image: url(./assets/header-background.png);
+  background-size: 100% 100%;
+  min-height: 13em;
 
-    position: relative;
-    align-items: center;
+  position: relative;
+  align-items: center;
 }
 
 .title-bar {
-    justify-content: space-between;
-    align-items: center;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .title-bar a {
-    text-decoration: none;
-    color: var(--grey-scale-000);
-    transition: all 100ms ease-in-out; 
+  text-decoration: none;
+  color: var(--grey-scale-000);
+  transition: all 100ms ease-in-out;
 }
 
 .title-bar a:hover {
-    text-decoration: underline;
-    font-size: 1.025em;
+  text-decoration: underline;
+  font-size: 1.025em;
 }
-
 
 /*
 ############
@@ -87,60 +86,62 @@ Search bar
 */
 
 .search-bar {
-    position: absolute;
-    /* Due to positioning Had to duplicate the padding of container */
-    width: 90%;
-    overflow: hidden;
-    /* I feel like this centering could be achieved more smoothly */
-    bottom: -1.5em;
-    left: 50%;
-    -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
-    border-radius: 10px;
-    opacity: 1;
-    transition: opacity 600ms ease-in-out;
+  position: absolute;
+  /* Due to positioning Had to duplicate the padding of container */
+  width: 90%;
+  overflow: hidden;
+  /* I feel like this centering could be achieved more smoothly */
+  bottom: -1.5em;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  border-radius: 10px;
+  opacity: 1;
+  transition: opacity 600ms ease-in-out;
+}
+
+.search-form {
+  width: 100%;
 }
 
 .search-bar.hidden {
-    opacity: 0;
-    pointer-events: none;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .search-bar label {
-    background-color: var(--grey-scale-400);
-    padding: 1em .5em;
-    cursor: pointer;
+  background-color: var(--grey-scale-400);
+  padding: 1em 0.5em;
+  cursor: pointer;
 }
 
 .search-bar input {
-    width: 100%;
-    background-color: var(--grey-scale-400);
-    color: var(--grey-scale-100);
-    padding: 1em 0 1em 2em;
-    border: 1px solid var(--grey-scale-400);
+  width: 100%;
+  background-color: var(--grey-scale-400);
+  color: var(--grey-scale-100);
+  padding: 1em 0 1em 2em;
+  border: 1px solid var(--grey-scale-400);
 }
 
 .search-bar input::selection,
 .search-bar input:focus {
-    outline: none;
-} 
+  outline: none;
+}
 
 .search-btn {
-    padding: 0 3.5em;
-    background-color: var(--grey-scale-300);
-    color: var(--grey-scale-000);
-    border: 1px solid var(--grey-scale-300);
-    cursor: pointer;
-    transition: all 150ms ease-in-out; 
+  padding: 0 3.5em;
+  background-color: var(--grey-scale-300);
+  color: var(--grey-scale-000);
+  border: 1px solid var(--grey-scale-300);
+  cursor: pointer;
+  transition: all 150ms ease-in-out;
 }
 
 .search-btn:hover,
 .search-btn:focus {
-    background-color: var(--grey-scale-100);
-    color: var(--grey-scale-500);
+  background-color: var(--grey-scale-100);
+  color: var(--grey-scale-500);
 }
-
-
 
 /*
 ############
@@ -148,16 +149,16 @@ Main content
 ############
 */
 
-.place-holder-content {
-    flex-direction: column;
-    align-items: center;
-    padding-top: 10em;
-    color: var(--grey-scale-300);
-    font-size: 1.3rem;
-    font-weight: 700;
-    letter-spacing: .1rem;
+.place-holder-content,
+.no-result {
+  flex-direction: column;
+  align-items: center;
+  padding-top: 10em;
+  color: var(--grey-scale-300);
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: 0.1rem;
 }
-
 
 /*
 ############
@@ -166,73 +167,69 @@ Movie card
 */
 
 .card {
-    padding: 2em 0;
-    border-bottom: 1px solid var(--grey-scale-300);
+  padding: 2em 0;
+  border-bottom: 1px solid var(--grey-scale-300);
 }
 
 .card-body {
-    margin: 1em;
-    flex-direction: column;
-    justify-content: space-around;
-    
+  margin: 1em;
+  flex-direction: column;
+  justify-content: space-around;
 }
 
 .sub-title {
-    width: 100%;
-    justify-content: space-between;
+  width: 100%;
+  justify-content: space-between;
 }
 
 .rating {
-    padding-left: 1em;
-    align-items: center;
-    /* justify-content: end; */
+  padding-left: 1em;
+  align-items: center;
+  /* justify-content: end; */
 }
 
 .rating-num {
-    padding-left: .2em;
-    /* todo: figure out how to get this to sit inline with the star */
-    padding-top: .1em;
-    font-size: .9rem;
-    align-items: center;
+  padding-left: 0.2em;
+  /* todo: figure out how to get this to sit inline with the star */
+  padding-top: 0.1em;
+  font-size: 0.9rem;
+  align-items: center;
 }
 
 .movie-data {
-    font-size: .8rem;
-    align-items: center;
-    justify-content: space-between;
+  font-size: 0.8rem;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .watch-list-btn {
-    background-color: var(--grey-scale-500);
-    color: var(--grey-scale-000);
-    align-items: center;
-    padding: 3px;
-    border: 1px solid var(--grey-scale-500);
-    transition: all 150ms ease-in-out;
+  background-color: var(--grey-scale-500);
+  color: var(--grey-scale-000);
+  align-items: center;
+  padding: 3px;
+  border: 1px solid var(--grey-scale-500);
+  transition: all 150ms ease-in-out;
+  cursor: pointer;
 }
 
 .watch-list-btn:hover {
-
-    background-color: var(--grey-scale-100);
-    color: var(--grey-scale-500);
+  background-color: var(--grey-scale-100);
+  color: var(--grey-scale-500);
 }
 
-
 .watch-list-btn img {
-    margin-right: .3em;
+  margin-right: 0.3em;
 }
 
 .movie-img {
-    order: -1;
-    max-width: 7em;
-    height: auto;
+  order: -1;
+  max-width: 7em;
+  height: auto;
 }
 
 .description {
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;  
-    overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
-
-
