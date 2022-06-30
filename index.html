@@ -17,7 +17,7 @@
   <body>
     <div class="main-container">
       <header class="flex">
-        <div class="content-container">
+        <div class="content-container slider">
           <div class="title-bar flex">
             <h1 id="title" class="title">Find your film</h1>
             <a id="navigation-btn" data-page="find" href="#">My Watchlist</a>
@@ -36,8 +36,8 @@
               action="search"
               method="#"
             >
-              <input type="text" name="search-input" id="search-input" />
-              <button type="submit" class="search-btn" id="search-btn">
+              <input id="search-input" type="text" name="search-input" />
+              <button id="search-btn" type="submit" class="search-btn">
                 Search
               </button>
             </form>
@@ -45,7 +45,7 @@
         </div>
       </header>
       <main>
-        <div class="content-container" id="main-content">
+        <div id="main-content" class="content-container slider">
           <div class="place-holder-content flex">
             <img src="./assets/film-icon.png" alt="film icon" />
             <p class="place-holder-text">Start exploring</p>

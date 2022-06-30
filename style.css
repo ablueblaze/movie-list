@@ -10,8 +10,6 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  /* test border */
-  /* border: 1px solid red; */
 }
 
 body {
@@ -30,7 +28,6 @@ body {
 .content-container {
   width: 90%;
   margin: 2rem auto;
-  /* padding: 0 2rem; */
 }
 
 .flex {
@@ -47,6 +44,18 @@ Typography
   font-size: 2.5rem;
   font-weight: 800;
 }
+
+/*
+############
+Slider transition
+############
+*/
+
+.slider {
+
+}
+
+
 
 /*
 ############
