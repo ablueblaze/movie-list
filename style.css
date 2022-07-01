@@ -52,9 +52,16 @@ Slider transition
 */
 
 .slider {
-
 }
 
+.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.fade-in {
+  opacity: 1;
+}
 
 
 /*
@@ -106,8 +113,9 @@ Search bar
   transform: translateX(-50%);
   border-radius: 10px;
   opacity: 1;
-  transition: opacity 600ms ease-in-out;
+  /* transition: opacity 600ms ease-in-out; */
 }
+
 
 .search-form {
   width: 100%;

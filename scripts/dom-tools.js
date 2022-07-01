@@ -35,8 +35,8 @@ const getWatchListDefaultHtml = () => {
 };
 
 const displaySearchResults = async (placement, results) => {
-  const movies = await results;
   placement.innerHTML = '';
+  const movies = await results;
   if (movies) {
     for (let i of movies) {
       placement.insertAdjacentHTML('beforeend', i.getCardHtml('plus'));
@@ -46,71 +46,66 @@ const displaySearchResults = async (placement, results) => {
   placement.innerHTML = getNoResultsHtml();
 };
 
-// applies a timeout to the given element and causes it to fade out then in.
-const fadeTransitionEl = (element) => {
-  element.style.transition = `opacity 600ms`;
-  element.style.opacity = 0;
-  setTimeout(() => {
-    element.style.opacity = 1;
-  }, 600);
-};
+const pageTransition = (() => {
+  const searchBarEl = document.getElementById('search-bar')
+  const fade = (element, inOut, time) => {
+    element.style.transition = `opacity ${time}ms`;
+    if (inOut === 'in') {
+        element.classList.remove('fade-out')
+        element.classList.add('fade-in');
+      return;
+    }
+      element.classList.remove('fade-in');
+      element.classList.add('fade-out')
+  };
 
-// waits for a set time to change the text content of a given element
-const transitionText = (element, content) => {
-  setTimeout(() => {
-    element.textContent = content;
-  }, 600);
-};
+  const populateWatchList = (watchList) => {
+    let watchListHtml = ''
+    for (let i of watchList) {
+      watchListHtml += i.getCardHtml('minus')
+    }
+    return watchListHtml;
+  }
 
-const transitionInnerHtml = (target, newHtml) => {
-  setTimeout(() => {
-    target.innerHTML = newHtml;
-  }, 600);
-};
-
-const textTransitionWrap = (pageName) => {
+  const flipPage = (mainContent, element, pageName, watchList, time) => {
     const title = document.getElementById('title');
     const navBtn = document.getElementById('navigation-btn');
-    const tempValues = pageValues(pageName);
-    transitionText(title, tempValues.title)
-    transitionText(navBtn, tempValues.navBtn);
-    navBtn.dataset.page = pageName;
-}
+    let defaultHtml;
+    let tempName = pageName
+    if (tempName === 'find') {
+      tempName = 'watch'
+      defaultHtml = getWatchListDefaultHtml();
+    } else {
+      tempName = 'find'
+      defaultHtml = getSearchDefaultHtml();
+    }
+    const tempValues = pageValues(tempName);
 
-const flipPage = (mainContent, pageName, watchList) => {
-  const slider = document.querySelectorAll('.slider')
-  const searchBarEl = document.getElementById('search-bar');
+    // fade out the old page
+    fade(element, 'out', time)
 
-  slider.forEach((el) => el.style.transition = 'opacity 600ms')
-  mainContent.innerHTML = '';
-
-  slider.forEach((el) => fadeTransitionEl(el))
-  // fadeTransitionEl(slider);
-
-  if (pageName !== 'find') {
-    textTransitionWrap('find')
-    transitionInnerHtml(mainContent, getSearchDefaultHtml())
+    // fade in the new page
     setTimeout(() => {
-      searchBarEl.classList.remove('hidden');
-    }, 600);
-    // mainContent.innerHTML = getSearchDefaultHtml();
-    return;
+      title.textContent = tempValues.title;
+      navBtn.textContent = tempValues.navBtn;
+      mainContent.innerHTML = defaultHtml;
+      if (tempName === 'watch') {
+        searchBarEl.classList.add('hidden')
+        if (watchList.length !== 0) {
+          mainContent.innerHTML = populateWatchList(watchList);
+        }
+      } else {
+        searchBarEl.classList.remove('hidden')
+      }
+      fade(element, 'in', time)
+    }, time)
   }
-  textTransitionWrap('watch')
-  searchBarEl.classList.add('hidden');
-  if (watchList.length === 0) {
-    transitionInnerHtml(mainContent, getWatchListDefaultHtml())
-    // mainContent.innerHTML = getWatchListDefaultHtml();
-    return;
-  }
-  transitionInnerHtml(mainContent, watchList.join(''))
-  mainContent.innerHTML = watchList.join('');
-};
+
+  return { flipPage };
+})();
 
 export {
-  flipPage,
-  fadeTransitionEl,
-  transitionText,
+  pageTransition,
   getNoResultsHtml,
   displaySearchResults,
   getSearchDefaultHtml,

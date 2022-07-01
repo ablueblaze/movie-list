@@ -7,7 +7,6 @@ class Movie {
     description,
     poster,
     id,
-    saved = false
   ) {
     this.title = title;
     this.rating = ratings;
@@ -16,7 +15,6 @@ class Movie {
     this.description = description;
     this.poster = poster;
     this.id = id;
-    this.saved = saved;
   }
   getCardHtml(symbol) {
     return `
@@ -44,8 +42,8 @@ class Movie {
       </div>
     `;
   }
-  // todo get this functionality up and going
 
+  // todo get this functionality up and going
   getWatchListHtml(symbol) {
     let symbolIcon = './assets/plus-icon.png';
     let word = 'add';
