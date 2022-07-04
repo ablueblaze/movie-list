@@ -18,7 +18,7 @@ class Movie {
   }
   getCardHtml(symbol) {
     return `
-      <div class="card flex">
+      <div class="card flex" data-card-id="${this.id}">
         <div class="card-body flex">
           <div class="sub-title flex">
             <h3>${this.title}</h3>
@@ -55,7 +55,7 @@ class Movie {
       <button
         class="watch-list-btn flex"
         data-action="${word}"
-        data-watch-list-btn="${this.id}"
+        data-watch-list-btn-id="${this.id}"
       >
         <img src="${symbolIcon}" alt="plus symbol" />
         ${word} to watchlist
