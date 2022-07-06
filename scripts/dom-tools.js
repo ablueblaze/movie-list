@@ -1,5 +1,3 @@
-import { pageValues } from './misc-tools.js';
-
 const getNoResultsHtml = () => {
   return `
     <p class="no-result"> 
@@ -47,42 +45,56 @@ const displaySearchResults = async (placement, results) => {
 };
 
 const pageTransition = (() => {
-  const searchBarEl = document.getElementById('search-bar')
+  const searchBarEl = document.getElementById('search-bar');
+
+  const pageValues = (pageName) => {
+    if (pageName === 'find') {
+      return {
+        title: 'Find your film',
+        navBtn: 'My Watchlist',
+      };
+    }
+    return {
+      title: 'My Watchlist',
+      navBtn: 'Search for movies',
+    };
+  };
+
   const fade = (element, inOut, time) => {
     element.style.transition = `opacity ${time}ms`;
     if (inOut === 'in') {
-        element.classList.remove('fade-out')
-        element.classList.add('fade-in');
+      element.classList.remove('fade-out');
+      element.classList.add('fade-in');
       return;
     }
-      element.classList.remove('fade-in');
-      element.classList.add('fade-out')
+    element.classList.remove('fade-in');
+    element.classList.add('fade-out');
   };
 
   const populateWatchList = (watchList) => {
-    let watchListHtml = ''
+    let watchListHtml = '';
     for (let i of watchList) {
-      watchListHtml += i.getCardHtml('minus')
+      watchListHtml += i.getCardHtml('minus');
     }
     return watchListHtml;
-  }
+  };
 
   const flipPage = (mainContent, element, pageName, watchList, time) => {
     const title = document.getElementById('title');
     const navBtn = document.getElementById('navigation-btn');
     let defaultHtml;
-    let tempName = pageName
+    let tempName = pageName;
     if (tempName === 'find') {
-      tempName = 'watch'
+      tempName = 'watch';
       defaultHtml = getWatchListDefaultHtml();
     } else {
-      tempName = 'find'
+      tempName = 'find';
       defaultHtml = getSearchDefaultHtml();
     }
     const tempValues = pageValues(tempName);
 
     // fade out the old page
-    fade(element, 'out', time)
+    fade(element, 'out', time);
 
     // fade in the new page
     setTimeout(() => {
@@ -90,16 +102,16 @@ const pageTransition = (() => {
       navBtn.textContent = tempValues.navBtn;
       mainContent.innerHTML = defaultHtml;
       if (tempName === 'watch') {
-        searchBarEl.classList.add('hidden')
+        searchBarEl.classList.add('hidden');
         if (watchList.length !== 0) {
           mainContent.innerHTML = populateWatchList(watchList);
         }
       } else {
-        searchBarEl.classList.remove('hidden')
+        searchBarEl.classList.remove('hidden');
       }
-      fade(element, 'in', time)
-    }, time)
-  }
+      fade(element, 'in', time);
+    }, time);
+  };
 
   return { flipPage };
 })();
